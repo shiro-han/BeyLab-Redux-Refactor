@@ -1,7 +1,7 @@
 # Bey-Slay
 
 You are given an api.js file that exports an array of objects that look like this:
-   `{ "id": 1, "name": "All Day Slay", "img": "https://media.giphy.com/media/3o6gb7cN7bwDxAbnS8/giphy.gif", "favorite": false }`
+  > `{ "id": 1, "name": "All Day Slay", "img": "https://media.giphy.com/media/3o6gb7cN7bwDxAbnS8/giphy.gif", "favorite": false }`
 
 # Deliverables:
 
