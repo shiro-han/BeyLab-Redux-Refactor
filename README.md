@@ -28,3 +28,8 @@ You are given an api.js file that exports an array of objects that look like thi
 - Look up the window.alert() function
 
 ![beyonce gif](bey-slay.gif)
+
+# Bonus 
+- Add a num_of_clicks key to all of the objects and that key should be set to the value of 0
+- Each time an image is clicked, the num_of_clicks should increase by 1
+- Your Index should be sorted by most clicks, which the image with the highest number of clicks as the first image rendered, and the image with the lowest number of clicks as the last image rendered
