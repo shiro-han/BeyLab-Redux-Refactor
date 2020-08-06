@@ -5,26 +5,25 @@ import Favorites from './Favorites'
 import "./App.css";
 
 class App extends React.Component{
-  state = {beys: [...beyArray.map(bey => {
+  state = {beys: beyArray.map(bey => {
     bey.num_of_clicks = 0;
     return bey;
-  })]}
+  })}
 
-  indexClickHandler = (obj) => {this.clickedBeyFn(obj, true)}
+  indexClickHandler = (id) => {this.clickedBeyFn(id, true)}
 
-  favClickHandler = (obj) => {
+  favClickHandler = (id) => {
     window.alert('I got a hot sauce in my bag, swag');
-    this.clickedBeyFn(obj, false);
+    this.clickedBeyFn(id, false);
   }
 
-  clickedBeyFn = (obj, bool) => {
-    let clickedBey = this.state.beys.find(bey => bey.id === obj.id)
-    let index = this.state.beys.indexOf(clickedBey)
-    let array = this.state.beys
-    array[index].favorite = bool
-    array[index].num_of_clicks++;
-    console.log(array[index].name, 'click count:', array[index].num_of_clicks)
-    this.setState({beys: array})
+  clickedBeyFn = (id, bool) => {
+    let array = [...this.state.beys]
+    let clickedBey = array.find(bey => bey.id === id);
+    clickedBey.favorite = bool;
+    clickedBey.num_of_clicks++;
+    // console.log(clickedBey.name, 'click count:', clickedBey.num_of_clicks);
+    this.setState({beys: array});
   }
 
   render() {
