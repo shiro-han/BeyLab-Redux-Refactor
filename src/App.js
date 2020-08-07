@@ -2,15 +2,20 @@ import React from "react";
 import beyArray from './api';
 import BeyContainer from './BeyContainer'
 import Favorites from './Favorites'
+import CreateForm from './CreateForm'
+import SearchForm from './SearchForm'
 import "./App.css";
 
 class App extends React.Component{
-  state = {beys: beyArray.map(bey => {
-    bey.num_of_clicks = 0;
-    return bey;
-  })}
+  state = {
+    beys: beyArray.map(bey => {
+      bey.num_of_clicks = 0;
+      return bey;
+    }),
+    searchValue: ""
+  }
 
-  indexClickHandler = (id) => {this.clickedBeyFn(id, true)}
+  indexClickHandler = (id) => this.clickedBeyFn(id, true);
 
   favClickHandler = (id) => {
     window.alert('I got a hot sauce in my bag, swag');
@@ -18,7 +23,7 @@ class App extends React.Component{
   }
 
   clickedBeyFn = (id, bool) => {
-    let array = [...this.state.beys]
+    let array = [...this.state.beys];
     let clickedBey = array.find(bey => bey.id === id);
     clickedBey.favorite = bool;
     clickedBey.num_of_clicks++;
@@ -26,12 +31,32 @@ class App extends React.Component{
     this.setState({beys: array});
   }
 
+  addBey = (obj) => {
+    obj.favorite = false;
+    obj.num_of_clicks = 0;
+    let array = [...this.state.beys];
+    array.push(obj);
+    this.setState({beys: array});
+  }
+
+  searchHandler = (e) => this.setState({searchValue: e.target.value});
+
+  searchFilteredBeys = () => this.state.beys.filter(bey => bey.name.toLowerCase().includes(this.state.searchValue.toLowerCase()));
+
   render() {
   return (
-    <div className="container">
-      <BeyContainer clickHandler={this.indexClickHandler} beys={this.state.beys}/>
-      <Favorites clickHandler={this.favClickHandler} beys={this.state.beys}/>
-    </div>
+    <>
+      <br/>
+      <div className="container">
+        <CreateForm addBey={this.addBey}/>
+        <SearchForm searchHandler={this.searchHandler} searchValue={this.state.searchValue}/>
+      </div>
+      <br/>
+      <div className="container">
+        <BeyContainer clickHandler={this.indexClickHandler} beys={this.searchFilteredBeys()}/>
+        <Favorites clickHandler={this.favClickHandler} beys={this.searchFilteredBeys()}/>
+      </div>
+    </>
   )}
 }
 
