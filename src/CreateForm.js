@@ -1,36 +1,48 @@
 import React from 'react';
+import {connect} from 'react-redux'
 
-class CreateForm extends React.Component {
-    state = {
-        name: "",
-        img: ""
+function CreateForm(props) {
+
+    const changeAction = (e) => {
+        return {
+            type: 'FORM_CHANGE',
+            name: e.target.name,
+            value: e.target.value
+        }
     }
 
-    changeHandler = (e) => {
-        this.setState({[e.target.name]: e.target.value})
+    const changeHandler = (e) => {
+        console.log(changeAction(e))
+        props.dispatch(changeAction(e))
     }
 
-    submitHandler = (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-        if (this.state.name && this.state.img){
-            this.props.addBey(this.state);
-        }
-        else {
-            window.alert("Fill out both fields of the form")
-        }
+        // if (state.name && state.img){
+        //     props.addBey(state);
+        // }
+        // else {
+        //     window.alert("Fill out both fields of the form")
+        // }
     }
 
-    render() {
-        return (
-            <div className="form">
-                <form onSubmit={this.submitHandler}>
-                    <input onChange={this.changeHandler} type="text" name="name" placeholder="name" value={this.state.name}/>
-                    <input onChange={this.changeHandler} type="text" name="img" placeholder="image url" value={this.state.img}/>
-                    <input type="submit" value="Add Bey"/>
-                </form>
-            </div>
-        )
+    console.log(props.addFormValues)
+
+    return (
+        <div className="form">
+            <form onSubmit={submitHandler}>
+                <input onChange={changeHandler} type="text" name="name" placeholder="name" value={props.addFormValues.name}/>
+                <input onChange={changeHandler} type="text" name="img" placeholder="image url" value={props.addFormValues.img}/>
+                <input type="submit" value="Add Bey"/>
+            </form>
+        </div>
+    )
+}
+
+const msp = (state) => {
+    return {
+        addFormValues: state.addFormValues
     }
 }
 
-export default CreateForm;
+export default connect(msp)(CreateForm);
